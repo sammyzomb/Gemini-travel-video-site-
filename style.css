@@ -1,650 +1,428 @@
-/* --- 全局變數與基礎樣式 --- */
-:root {
-  --primary:#72bbf7;
-  --deep:#28445e;
-  --light:#eaf5ff;
-  --gold:#fbc02d;
-  --text-dark: #232c3b;
-  --text-light: #fff;
-  --shadow-light: rgba(0,0,0,0.08);
-  --shadow-dark: rgba(0,0,0,0.2);
-}
-
+/* General Body Styles from Website B */
 body {
-  font-family: 'Poppins', 'Noto Sans TC', 'Arial', sans-serif;
-  background: var(--light);
-  color: var(--text-dark);
-  margin: 0;
-  padding: 0;
-  line-height: 1.6;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    scroll-behavior: smooth;
 }
 
-/* --- 統一 Header 樣式 (取代原 header 和 .navbar) --- */
-header.main-header {
-  position: absolute; /* 預設為絕對定位，覆蓋在 HERO 上 */
-  z-index: 100;
-  left: 0;
-  right: 0;
-  top: 0;
-  padding: 20px 48px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0)); /* 透明漸變 */
-  transition: background 0.3s ease, padding 0.3s ease; /* 捲動時的過渡效果 */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    overflow: hidden;
 }
 
-/* 當導航列捲動時的固定和背景變色 */
-.main-header.scrolled {
-  background: linear-gradient(90deg, var(--deep) 70%, #2991c8 100%);
-  position: fixed; /* 固定在頂部 */
-  padding: 15px 48px;
-  box-shadow: 0 2px 10px var(--shadow-dark);
+.section-padding {
+    padding: 40px 0;
 }
 
-.header-content {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+h1, h2, h3 {
+    color: #222;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-.logo-link {
-  display: block;
+.btn {
+    display: inline-block;
+    background: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
-.logo {
-  height: 54px;
-  background: rgba(255,255,255,0.92);
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(50,100,180,0.10);
-  padding: 6px 18px;
-  transition: .2s;
-  max-width: 260px;
-}
-.logo:hover {
-  transform: scale(1.02);
+.btn:hover {
+    background: #0056b3;
 }
 
-.main-nav {
-  display: flex;
-  align-items: center;
-}
-
-.main-nav a:not(.dropbtn) {
-  color: var(--text-light);
-  text-decoration: none;
-  margin-left: 34px;
-  font-size: 1.1em;
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  transition: color .2s, background .2s;
-  padding: 6px 12px;
-  border-radius: 8px;
-}
-.main-nav a:hover:not(.dropbtn), .main-nav a.active {
-  color: var(--gold);
-  background: rgba(255,255,255,0.08);
-}
-
-/* 下拉選單樣式 */
-.dropdown {
-  position: relative;
-  display: inline-block;
-  margin-left: 34px;
-}
-
-.dropbtn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 6px 12px;
-  font-size: 1.1em;
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  color: var(--text-light);
-  transition: color .2s, background .2s;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-}
-
-.dropbtn:hover, .dropbtn.active, .dropbtn.open {
-  color: var(--gold);
-  background: rgba(255,255,255,0.08);
-}
-
-.arrow-down {
-  border: solid var(--text-light);
-  border-width: 0 2px 2px 0;
-  display: inline-block;
-  padding: 3px;
-  transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-  margin-left: 8px;
-  transition: transform 0.2s ease-in-out;
-}
-.dropbtn.open .arrow-down {
-  transform: rotate(-135deg);
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 220px;
-  box-shadow: 0px 8px 16px 0px var(--shadow-dark);
-  z-index: 1;
-  border-radius: 8px;
-  overflow: hidden;
-  padding: 8px 0;
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.dropdown.show-dropdown .dropdown-content {
-  display: block;
-}
-
-.dropdown-content a {
-  color: var(--text-dark) !important;
-  padding: 10px 16px !important;
-  text-decoration: none;
-  display: block;
-  font-size: 1em !important;
-  font-weight: normal !important;
-  letter-spacing: normal !important;
-  margin-left: 0 !important;
-  border-radius: 0 !important;
-}
-
-.dropdown-content a:hover {
-  background-color: #f1f1f1 !important;
-  color: var(--primary) !important;
-}
-
-/* 漢堡選單 (預設隱藏) */
-.menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-  z-index: 101;
-}
-.menu-toggle .bar {
-  display: block;
-  width: 25px;
-  height: 3px;
-  margin: 5px auto;
-  background-color: var(--text-light);
-  transition: all 0.3s ease-in-out;
-}
-.menu-toggle.active .bar:nth-child(1) {
-  transform: translateY(8px) rotate(45deg);
-}
-.menu-toggle.active .bar:nth-child(2) {
-  opacity: 0;
-}
-.menu-toggle.active .bar:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg);
-}
-
-/* --- HERO Section --- */
+/* Hero 區塊的 CSS */
 .hero-section {
-  position: relative;
-  width: 100vw;
-  height: 100vh; /* 全高顯示 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background: var(--deep);
-}
-
-.hero-carousel {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.hero-video-item {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-  pointer-events: none; /* 讓點擊穿透到下面的元素 */
-}
-
-.hero-video-item.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.hero-video-item iframe,
-.hero-video-item video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(0.68) saturate(1.05) blur(1px); /* 原本的濾鏡效果 */
-}
-
-.hero-overlay {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(80deg, rgba(50,80,140,0.46), rgba(0,0,0,0.35) 90%);
-  z-index: 2;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 3;
-  text-align: center;
-  color: var(--text-light);
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 60px 12px 50px 12px;
-}
-.hero-content h1 {
-  font-size: 2.8em;
-  font-family: 'Poppins',sans-serif;
-  letter-spacing: 3px;
-  font-weight: 700;
-  margin-bottom: 18px;
-  text-shadow: 0 6px 32px #12467890;
-}
-.hero-content h2 {
-  font-size: 1.38em;
-  font-weight: 500;
-  color: var(--gold);
-  margin-bottom: 30px;
-  text-shadow: 0 2px 20px #222;
-}
-.hero-content .hero-btn {
-  background: linear-gradient(90deg,var(--primary) 60%,#2776bb 100%);
-  color:var(--text-light);
-  border:none;
-  border-radius:30px;
-  font-size:1.14em;
-  font-weight:700;
-  padding:16px 44px;
-  cursor:pointer;
-  box-shadow:0 4px 28px #5ac8fa20;
-  letter-spacing:2px;
-  margin-top:8px;
-  transition:.18s;
-}
-.hero-content .hero-btn:hover {background:linear-gradient(90deg,#2776bb 10%,#58c9fa 100%);}
-
-/* 輪播導航按鈕 */
-.carousel-nav {
-  position: absolute;
-  width: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  justify-content: space-between;
-  padding: 0 20px;
-  z-index: 4;
-}
-
-.carousel-nav button {
-  background: rgba(0,0,0,0.5);
-  color: var(--text-light);
-  border: none;
-  padding: 15px 18px;
-  font-size: 1.5em;
-  cursor: pointer;
-  border-radius: 50%;
-  transition: background 0.3s ease;
-}
-
-.carousel-nav button:hover {
-  background: rgba(0,0,0,0.8);
-}
-
-/* 輪播點點 */
-.carousel-dots {
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 4;
-  display: flex;
-  gap: 10px;
-}
-
-.carousel-dot {
-  width: 12px;
-  height: 12px;
-  background: rgba(255,255,255,0.5);
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
-
-.carousel-dot.active {
-  background: var(--gold);
-  transform: scale(1.2);
-}
-
-/* 主要內容區塊的通用容器 */
-main {
-  max-width: 1100px; /* 增加最大寬度 */
-  margin: 40px auto;
-  padding: 0 16px;
-}
-
-.section-container {
-  margin-bottom: 50px;
-}
-
-h2 {
-  font-size: 1.8em;
-  color: var(--deep);
-  letter-spacing: 1px;
-  margin-bottom: 25px;
-  text-align: center;
-}
-
-/* VOD 卡片通用樣式 */
-.vod-cards, .category-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 25px;
-}
-
-.vod-card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.vod-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-}
-
-.vod-card .thumb {
-  width: 100%;
-  height: 180px;
-  background-size: cover;
-  background-position: center;
-  border-bottom: 1px solid #eee;
-}
-
-.vod-card .vod-info {
-  padding: 15px;
-}
-
-.vod-info h3 {
-  font-size: 1.15em;
-  color: var(--deep);
-  margin: 0 0 8px 0;
-  line-height: 1.4;
-  min-height: 44px; /* 確保標題高度一致 */
-}
-
-.vod-info .meta {
-  font-size: .9em;
-  color: #888;
-  margin-bottom: 6px;
-}
-
-.vod-info p {
-  font-size: .95em;
-  color: #555;
-  margin: 0;
-  line-height: 1.5;
-  height: 60px; /* 確保描述高度一致 */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3; /* 限制行數 */
-  -webkit-box-orient: vertical;
-}
-
-/* 影片篩選條 */
-.filter-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  align-items: center;
-  margin-bottom: 30px;
-  justify-content: center;
-}
-.filter-bar select, .filter-bar input[type="text"] {
-  padding: 10px 15px;
-  border: 1px solid #ccddee;
-  border-radius: 8px;
-  font-size: 1em;
-  outline: none;
-  transition: border-color 0.2s;
-}
-.filter-bar select:focus, .filter-bar input[type="text"]:focus {
-  border-color: var(--primary);
-}
-.filter-bar input[type="text"] {
-  width: 180px;
-}
-
-/* 節目表樣式 */
-.prog-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  background-color: #fff;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-  border-radius: 12px;
-  overflow: hidden; /* 確保圓角 */
-}
-.prog-table th, .prog-table td {
-  padding: 15px;
-  text-align: left;
-  border-bottom: 1px solid #eee;
-}
-.prog-table th {
-  background-color: var(--primary);
-  color: var(--text-light);
-  font-weight: 600;
-}
-.prog-table tr:last-child td {
-  border-bottom: none;
-}
-.prog-table tr {
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-.prog-table tr:hover {
-  background-color: #f5f9fc;
-}
-.prog-table tr td:first-child {
-  font-weight: bold;
-  color: var(--deep);
-}
-
-/* 影片播放頁面 */
-#video-section {
-  max-width: 960px;
-  margin: 40px auto;
-  padding: 0 16px;
-}
-
-#video-player {
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%; /* 16:9 比例 */
-  height: 0;
-  overflow: hidden;
-  background-color: #000;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-}
-
-#video-player iframe, #video-player video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  border-radius: 12px;
-}
-
-#video-info {
-  background: #fff;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-}
-
-#video-info h2 {
-  font-size: 2em;
-  color: var(--deep);
-  margin-top: 0;
-  margin-bottom: 10px;
-  text-align: left; /* 影片資訊標題靠左 */
-}
-
-#video-info .meta {
-  font-size: 1em;
-  color: #777;
-  margin-bottom: 15px;
-}
-
-#video-info p {
-  font-size: 1.05em;
-  color: #333;
-  line-height: 1.7;
-}
-
-#vod-link {
-  display: inline-block;
-  margin-top: 25px;
-  padding: 10px 20px;
-  background-color: #eee;
-  color: var(--deep);
-  text-decoration: none;
-  border-radius: 8px;
-  transition: background-color 0.2s;
-  font-weight: 500;
-}
-#vod-link:hover {
-  background-color: #ddd;
-}
-
-
-/* --- Footer --- */
-footer {
-  text-align: center;
-  padding: 30px 20px;
-  margin-top: 50px;
-  background: var(--deep);
-  color: var(--text-light);
-  font-size: 0.9em;
-  letter-spacing: 0.5px;
-}
-
-/* --- 手機版適應性 (Mobile Responsiveness) --- */
-@media (max-width: 780px) {
-  header.main-header {
-    padding: 12px 20px;
-  }
-  .main-nav {
-    display: none; /* 預設隱藏，由 JS 控制顯示 */
-    flex-direction: column;
-    position: absolute;
-    top: 70px; /* 調整為 Logo 下方 */
-    left: 0;
-    width: 100%;
-    background: var(--deep);
-    padding: 10px 0;
-    box-shadow: 0 8px 16px var(--shadow-dark);
-    align-items: flex-start;
-  }
-  .main-nav.active {
-    display: flex;
-  }
-  .main-nav a {
-    margin: 10px 20px;
-  }
-  .dropdown {
-    margin-left: 20px;
-    width: calc(100% - 40px);
-  }
-  .dropdown-content {
     position: relative;
     width: 100%;
-    box-shadow: none;
-    border-radius: 0;
-    background-color: #1a3c5a; /* 與主導航列背景色一致 */
-    padding: 0;
-  }
-  .dropdown-content a {
-    color: var(--text-light) !important;
-    padding: 10px 30px !important;
-  }
-  .dropdown-content a:hover {
-    background-color: #2a5c8a !important;
-  }
-
-  .menu-toggle {
-    display: block; /* 顯示漢堡選單按鈕 */
-  }
-
-  .hero-content h1 {font-size:2em;}
-  .hero-content h2 {font-size:1.1em;}
-  .carousel-nav button {
-    padding: 10px 12px;
-    font-size: 1.2em;
-  }
-  .carousel-dots {
-    bottom: 15px;
-  }
-
-  main {
-    padding: 0 10px;
-    margin: 30px auto;
-  }
-  h2 {
-    font-size: 1.5em;
-  }
-  .vod-cards, .category-cards {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-  }
-  .filter-bar {
-    justify-content: flex-start;
-  }
-  .filter-bar select, .filter-bar input[type="text"] {
-    width: calc(50% - 10px);
-  }
-  #video-section {
-    margin: 30px auto;
-    padding: 0 10px;
-  }
-  #video-info h2 {
-    font-size: 1.5em;
-  }
+    height: 100vh; /* 全螢幕高度 */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    /* 讓導覽列、標語、影片內容在垂直方向上分開 */
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    text-align: center;
 }
 
-@media (max-width: 600px) {
-  .logo {height: 35px; padding: 3px 10px;}
-  .hero-content h1 {font-size:1.5em;}
-  .hero-content h2 {font-size:0.9em;}
-  .hero-content .hero-btn {padding: 12px 25px; font-size: 1em;}
-  .filter-bar select, .filter-bar input[type="text"] {
-    width: 100%; /* 小螢幕下佔滿 */
-  }
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -2; /* 確保影片在內容下方 */
+}
+
+/* YouTube 嵌入式播放器的樣式 */
+#youtube-player {
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* 讓點擊穿透到下面的元素，避免誤觸YouTube控制 */
+    position: absolute; /* 確保 iframe 滿版 */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 確保影片居中 */
+    min-width: 100%;
+    min-height: 100%;
+    filter: brightness(60%); /* 增加影片亮度，讓文字更清晰 */
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* 半透明遮罩 */
+    z-index: -1; /* 在影片上方，內容下方 */
+}
+
+/* 上方標語區塊樣式 */
+.header-slogan {
+    z-index: 1; /* 確保在影片上方 */
+    padding: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* 增加文字陰影提高可讀性 */
+    margin-top: 100px; /* 為了讓開導覽列 */
+}
+.header-slogan h1 {
+    font-size: 3em;
+    margin-bottom: 5px;
+    color: #fff;
+}
+.header-slogan p {
+    font-size: 1.2em;
+    margin-top: 0;
+    color: #fff;
+}
+
+
+/* Hero Content (下方文字和按鈕) */
+.hero-content {
+    z-index: 1; /* 確保內容在影片和遮罩上方 */
+    padding: 20px;
+    margin-bottom: 50px; /* 增加底部邊距，讓文字不會太貼底 */
+}
+
+.hero-content h2 { /* 從 h1 改為 h2 以區分上方標語 */
+    font-size: 2.5em; /* 稍微小一點 */
+    margin-bottom: 20px;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+/* 導覽列樣式 (調整自網站A，使其透明並懸浮於HERO區塊上方) */
+.navbar {
+    position: absolute; /* 使導覽列懸浮 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+    padding: 15px 0;
+    z-index: 100; /* 確保導覽列在最上層 */
+    transition: background-color 0.3s ease;
+}
+
+/* 當導覽列滾動時變色 (可選，需要JS配合) */
+.navbar.scrolled {
+    background-color: #222; /* 滾動後的顏色 */
+}
+
+.navbar .container-fluid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 15px;
+}
+
+.navbar-brand img {
+    height: 50px;
+}
+
+.nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.nav-list li {
+    margin-left: 25px;
+}
+
+.nav-list a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+    padding: 5px 0;
+    transition: color 0.3s ease;
+}
+
+.nav-list a:hover {
+    color: #007bff;
+}
+
+/* Main content sections from Website B */
+.video-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.video-card:hover {
+    transform: translateY(-5px);
+}
+
+.video-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.video-card-content {
+    padding: 15px;
+}
+
+.video-card-content h3 {
+    font-size: 1.2em;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.video-card-content p {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* Swiper overrides and adjustments for Website B carousel */
+.swiper-container {
+    width: 100%;
+    height: auto;
+    margin-bottom: 30px;
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f9f9f9;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.swiper-button-next, .swiper-button-prev {
+    color: #007bff;
+}
+
+/* Category grid for Website B */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    text-align: center;
+}
+
+.category-item {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease;
+}
+
+.category-item:hover {
+    transform: translateY(-3px);
+}
+
+.category-item i {
+    font-size: 2em;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.category-item h3 {
+    font-size: 1.1em;
+    margin: 0;
+}
+
+/* Latest videos grid for Website B */
+.latest-videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+/* Footer styles from Website B */
+.footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+.footer p {
+    margin: 0;
+    font-size: 0.9em;
+}
+
+/* 目前正在播放區塊樣式 */
+.now-playing-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    max-width: 800px; /* 限制寬度 */
+    margin: 30px auto; /* 置中 */
+    flex-wrap: wrap; /* 小螢幕時換行 */
+}
+
+.now-playing-card .video-placeholder {
+    width: 320px; /* 影片預留位置寬度 */
+    height: 180px; /* 影片預留位置高度 (16:9) */
+    background-color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9em;
+    color: #666;
+    border-radius: 5px;
+    overflow: hidden; /* 確保影片或圖片在容器內 */
+    flex-shrink: 0; /* 不會縮小 */
+}
+/* 如果要直接嵌入影片，例如 YouTube iframe */
+.now-playing-card .video-placeholder iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+
+.now-playing-card .now-playing-details {
+    flex-grow: 1; /* 佔據剩餘空間 */
+    text-align: left;
+}
+
+.now-playing-card .now-playing-details h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: #222;
+    text-align: left; /* 左對齊 */
+}
+
+.now-playing-card .now-playing-details p {
+    font-size: 1em;
+    color: #555;
+    margin-bottom: 15px;
+    text-align: left; /* 左對齊 */
+}
+
+/* 各地區分類影片區塊樣式 (範例，可以調整) */
+#region-video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+.region-category-section { /* 為了地區分類新增的樣式 */
+    margin-bottom: 40px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+}
+.region-category-section h3 {
+    text-align: left; /* 地區標題左對齊 */
+    margin-bottom: 20px;
+    color: #007bff;
+    font-size: 1.8em;
+}
+.region-video-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .header-slogan h1 {
+        font-size: 2em;
+    }
+    .header-slogan p {
+        font-size: 1em;
+    }
+    .hero-content h2 {
+        font-size: 1.8em;
+    }
+    .hero-content p {
+        font-size: 1em;
+    }
+    .nav-list {
+        flex-direction: column;
+        align-items: center;
+    }
+    .nav-list li {
+        margin: 10px 0;
+    }
+    .navbar .container-fluid {
+        flex-direction: column;
+    }
+    .now-playing-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    .now-playing-card .video-placeholder {
+        width: 100%; /* 小螢幕時佔滿寬度 */
+        height: 200px;
+    }
+    .now-playing-card .now-playing-details {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-slogan h1 {
+        font-size: 1.8em;
+    }
+    .header-slogan p {
+        font-size: 0.9em;
+    }
+    .hero-content h2 {
+        font-size: 1.5em;
+    }
+    .hero-content p {
+        font-size: 0.9em;
+    }
+    .section-padding {
+        padding: 20px 0;
+    }
 }
