@@ -1,74 +1,95 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>航向世界旅遊頻道</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css"> </head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅遊電視頻道</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+</head>
 <body>
-  <header class="main-header">
-    <div class="header-content">
-      <a href="index.html" class="logo-link">
-        <img class="logo" src="logo.png" alt="航向世界旅遊頻道 LOGO">
-      </a>
-      <nav class="main-nav">
-        <a href="index.html" class="active">首頁</a>
-        <a href="program.html">節目表</a>
-        <a href="vod.html">隨選影片</a>
-        <div class="dropdown">
-          <a href="#" class="dropbtn">世界分區 <span class="arrow-down"></span></a>
-          <div class="dropdown-content" id="region-dropdown">
+    <header class="hero-section">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html">
+                    <img src="logo.png" alt="logo" height="50">
+                </a>
+                <ul class="nav-list">
+                    <li><a href="index.html">首頁</a></li>
+                    <li><a href="program.html">節目表</a></li>
+                    <li><a href="vod.html">隨選影片</a></li>
+                    <li><a href="#">關於我們</a></li>
+                    <li><a href="#">聯絡我們</a></li>
+                </ul>
             </div>
+        </nav>
+        <div class="header-slogan">
+            <h1>探索世界，從這裡開始</h1>
+            <p>Live 世界旅遊新視野</p>
         </div>
-      </nav>
-      <button class="menu-toggle" aria-label="選單">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </button>
-    </div>
-  </header>
 
-  <section class="hero-section">
-    <div class="hero-carousel" id="hero-carousel">
-      </div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1 id="hero-title">探索世界，從這裡開始</h1>
-      <h2 id="hero-subtitle">Live 世界旅遊新視野</h2>
-      <button class="hero-btn" onclick="window.location.href='vod.html'">立即觀看精選影片</button>
-    </div>
-    <div class="carousel-nav">
-      <button class="prev-slide"><</button>
-      <button class="next-slide">></button>
-    </div>
-    <div class="carousel-dots" id="carousel-dots"></div>
-  </section>
-
-  <main>
-    <section class="section-container">
-      <h2>最新上架</h2>
-      <div id="latest-videos" class="vod-cards">
+        <div class="video-background">
+            <div id="youtube-player"></div>
+            <div class="overlay"></div>
         </div>
-    </section>
-
-    <section class="section-container">
-      <h2>熱門主題</h2>
-      <div id="hot-categories" class="category-cards">
+        <div class="hero-content">
+            <h2>發現您的下一趟冒險</h2>
+            <p>沉浸在來自世界各地的精彩旅遊影片中。</p>
+            <a href="vod.html" class="btn btn-primary">立即觀看</a>
         </div>
-    </section>
+    </header>
 
-    <section class="section-container">
-      <h2>各地精選</h2>
-      <div id="regions-showcase" class="vod-cards">
+    <main>
+        <section id="now-playing-video" class="container section-padding">
+            <h2>目前正在播放</h2>
+            <div class="now-playing-card">
+                <div class="video-placeholder"></div>
+                <div class="now-playing-details">
+                    <h3>[節目名稱]</h3>
+                    <p>[節目描述]</p>
+                    <a href="#" class="btn">觀看直播</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="featured-videos" class="container section-padding">
+            <h2>精選影片</h2>
+            <div class="swiper-container featured-swiper">
+                <div class="swiper-wrapper" id="featured-video-list">
+                    </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </section>
+
+        <section id="categories" class="container section-padding">
+            <h2>熱門分類</h2>
+            <div class="category-grid">
+                </div>
+        </section>
+
+        <section id="latest-updates" class="container section-padding">
+            <h2>最新更新</h2>
+            <div class="latest-videos-grid" id="latest-video-list">
+                </div>
+        </section>
+
+        <section id="region-videos" class="container section-padding">
+            <h2>各地區分類影片</h2>
+            <div id="region-video-grid">
+                </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 旅遊電視頻道. 版權所有.</p>
         </div>
-    </section>
-  </main>
+    </footer>
 
-  <footer>
-    © 2025 航向世界旅遊頻道 All rights reserved.
-  </footer>
-
-  <script src="https://www.youtube.com/iframe_api"></script> <script src="script.js"></script> </body>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
 </html>
