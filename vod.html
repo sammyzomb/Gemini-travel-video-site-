@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>隨選影片｜航向世界旅遊頻道</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-content">
+      <a href="index.html" class="logo-link">
+        <img class="logo" src="logo.png" alt="航向世界旅遊頻道 LOGO">
+      </a>
+      <nav class="main-nav">
+        <a href="index.html">首頁</a>
+        <a href="program.html">節目表</a>
+        <a href="vod.html" class="active">隨選影片</a>
+        <div class="dropdown">
+          <a href="#" class="dropbtn">世界分區 <span class="arrow-down"></span></a>
+          <div class="dropdown-content" id="region-dropdown">
+            </div>
+        </div>
+      </nav>
+      <button class="menu-toggle" aria-label="選單">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+  </header>
+  <main>
+    <section class="section-container">
+      <h2>隨選影片（VOD）</h2>
+      <form id="filter-form" class="filter-bar">
+        <select id="region-filter">
+          <option value="">全部洲別</option>
+          </select>
+        <input type="text" id="country-filter" placeholder="輸入國家關鍵字">
+        <select id="category-filter">
+          <option value="">全部主題</option>
+          </select>
+        <input type="text" id="search" placeholder="搜尋影片標題或描述">
+        <button type="button" id="apply-filter">篩選</button>
+      </form>
+      <div id="vod-list" class="vod-cards">
+        </div>
+    </section>
+  </main>
+  <footer>
+    © 2025 航向世界旅遊頻道 All rights reserved.
+  </footer>
+  <script src="script.js"></script> <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let allVideos = []; // 儲存所有影片資料
+        const regionFilter = document.getElementById('region-filter');
+        const countryFilter = document.getElementById('country-filter');
+        const categoryFilter = document.getElementById('category-filter');
+        const searchInput = document.getElementById('search');
+        const applyFilterBtn = document.getElementById('apply-filter');
+        const vodList = document.getElementById('vod-list');
+
+        fetch('videos.json')
+            .then(res => res.json())
+            .then(videosData => {
+                allVideos = videosData;
+                populateFilters();
+                applyFilters(); // 初始化顯示所有影片或根據 URL 篩選
+            })
+            .catch(error => console.error('Error fetching videos.json:', error));
+
+        function populateFilters() {
+            // 動態載入區域篩選選項
+            const regions = [...new Set(allVideos.map(v => v.region))].sort();
+            regions.forEach(region => {
+                const option = document.createElement('option');
+                option.value = region;
+                option.textContent = region;
+                regionFilter.appendChild(option);
+            });
+
+            // 動態載入分類篩選選項
+            const categories = [...new Set(allVideos.map(v => v.category))].sort();
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category;
+                categoryFilter.appendChild(option);
+            });
+
+            // 檢查 URL 中的篩選參數並應用
+            const params = new URLSearchParams(location.search);
+            if (params.has('region')) {
+                regionFilter.value = params.get('region');
+            }
+            if (params.has('country')) {
+                countryFilter.value = params.get('country');
+            }
+            if (params.has('category')) {
+                categoryFilter.value = params.get('category');
+            }
+        }
+
+        function applyFilters() {
+            let selectedRegion = regionFilter.value;
+            let selectedCountry = countryFilter.value.trim().toLowerCase();
+            let selectedCategory = categoryFilter.value;
+            let searchText = searchInput.value.trim().toLowerCase();
+
+            let filteredList = allVideos.filter(v => {
+                let regionMatch = selectedRegion === '' || v.region === selectedRegion;
+                let countryMatch = selectedCountry === '' || v.country.toLowerCase().includes(selectedCountry);
+                let categoryMatch = selectedCategory === '' || v.category === selectedCategory;
+                let searchMatch = searchText === '' || v.title.toLowerCase().includes(searchText) || v.desc.toLowerCase().includes(searchText);
+
+                return regionMatch && countryMatch && categoryMatch && searchMatch;
+            });
+
+            renderVideoList(filteredList);
+        }
+
+        function renderVideoList(list) {
+            let html = '';
+            if (list.length === 0) {
+                html = '<p style="text-align:center; padding: 20px;">查無影片，請調整條件。</p>';
+            } else {
+                list.forEach(v => {
+                    html += `
+                        <div class="vod-card" onclick="location.href='video.html?id=${v.id}'">
+                            <div class="thumb" style="background-image:url('${v.thumb}')"></div>
+                            <div class="vod-info">
+                                <h3>${v.title}</h3>
+                                <div class="meta">
+                                    <span>${v.region}｜${v.country}</span>
+                                    <span>｜${v.category}</span>
+                                </div>
+                                <p>${v.desc}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            vodList.innerHTML = html;
+        }
+
+        // 監聽篩選條件變化
+        regionFilter.addEventListener('change', applyFilters);
+        countryFilter.addEventListener('input', applyFilters); // 輸入時即時篩選
+        categoryFilter.addEventListener('change', applyFilters);
+        searchInput.addEventListener('input', applyFilters); // 輸入時即時篩選
+        applyFilterBtn.addEventListener('click', applyFilters); // 點擊按鈕再次確認篩選
+    });
+  </script>
+</body>
+</html>

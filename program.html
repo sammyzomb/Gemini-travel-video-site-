@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>節目表｜航向世界旅遊頻道</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-content">
+      <a href="index.html" class="logo-link">
+        <img class="logo" src="logo.png" alt="航向世界旅遊頻道 LOGO">
+      </a>
+      <nav class="main-nav">
+        <a href="index.html">首頁</a>
+        <a href="program.html" class="active">節目表</a>
+        <a href="vod.html">隨選影片</a>
+        <div class="dropdown">
+          <a href="#" class="dropbtn">世界分區 <span class="arrow-down"></span></a>
+          <div class="dropdown-content" id="region-dropdown">
+            </div>
+        </div>
+      </nav>
+      <button class="menu-toggle" aria-label="選單">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+  </header>
+  <main>
+    <section class="section-container">
+      <h2>本日節目表</h2>
+      <div id="program-table"></div>
+    </section>
+  </main>
+  <footer>
+    © 2025 航向世界旅遊頻道 All rights reserved.
+  </footer>
+  <script src="script.js"></script> <script>
+    // 獨立處理節目表載入邏輯，確保 DOMContentLoaded 觸發
+    document.addEventListener('DOMContentLoaded', () => {
+        let videos = [];
+        fetch('videos.json')
+            .then(res => res.json())
+            .then(data => {
+                videos = data;
+                fetch('program.json')
+                    .then(res => res.json())
+                    .then(program => {
+                        let html = '<table class="prog-table"><tr><th>開始</th><th>節目名稱</th><th>主題</th><th>地區</th></tr>';
+                        program.forEach((p) => { // 移除未使用的 i
+                            let v = videos.find(vv => vv.id === p.vid);
+                            if (!v) return; // 如果找不到影片就跳過
+
+                            html += `
+                                <tr onclick="location.href='video.html?id=${v.id}'">
+                                    <td>${p.start}</td>
+                                    <td>${p.title}</td>
+                                    <td>${v.category}</td>
+                                    <td>${v.region}</td>
+                                </tr>
+                            `;
+                        });
+                        html += '</table>';
+                        document.getElementById('program-table').innerHTML = html;
+                    })
+                    .catch(error => console.error('Error fetching program.json:', error));
+            })
+            .catch(error => console.error('Error fetching videos.json:', error));
+    });
+  </script>
+</body>
+</html>

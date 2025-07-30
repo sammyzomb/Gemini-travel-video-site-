@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>影片播放｜航向世界旅遊頻道</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-content">
+      <a href="index.html" class="logo-link">
+        <img class="logo" src="logo.png" alt="航向世界旅遊頻道 LOGO">
+      </a>
+      <nav class="main-nav">
+        <a href="index.html">首頁</a>
+        <a href="program.html">節目表</a>
+        <a href="vod.html">隨選影片</a>
+        <div class="dropdown">
+          <a href="#" class="dropbtn">世界分區 <span class="arrow-down"></span></a>
+          <div class="dropdown-content" id="region-dropdown">
+            </div>
+        </div>
+      </nav>
+      <button class="menu-toggle" aria-label="選單">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+  </header>
+  <main>
+    <section id="video-section">
+      <div id="video-player"></div>
+      <div id="video-info"></div>
+      <a id="vod-link" href="vod.html" style="display:inline-block;margin-top:16px;">← 返回隨選影片</a>
+    </section>
+  </main>
+  <footer>
+    © 2025 航向世界旅遊頻道 All rights reserved.
+  </footer>
+  <script src="script.js"></script> <script>
+    // 獨立處理影片載入邏輯
+    document.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(location.search);
+        const vid = params.get('id');
+
+        fetch('videos.json')
+            .then(res => res.json())
+            .then(videos => {
+                let v = videos.find(vv => vv.id == vid);
+                if (!v) {
+                    document.getElementById('video-player').innerHTML = '<p style="text-align:center; padding: 50px;">找不到此影片或影片ID無效。</p>';
+                    document.getElementById('video-info').innerHTML = '';
+                    return;
+                }
+
+                let playerHtml = '';
+                if (v.type === 'youtube') {
+                    // 正確的 YouTube 嵌入 URL
+                    playerHtml = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${v.ytid}?autoplay=1&controls=1&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                } else if (v.type === 'mp4') {
+                    playerHtml = `<video width="100%" height="100%" controls autoplay><source src="${v.src}" type="video/mp4"></video>`;
+                }
+                document.getElementById('video-player').innerHTML = playerHtml;
+                document.getElementById('video-info').innerHTML = `
+                    <h2>${v.title}</h2>
+                    <div class="meta">${v.region}｜${v.country}｜${v.category}</div>
+                    <p>${v.desc || '暫無描述。'}</p>
+                `;
+            })
+            .catch(error => console.error('Error fetching videos.json:', error));
+    });
+  </script>
+</body>
+</html>
